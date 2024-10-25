@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<!-- display contents of user basket -->
+<section>  
+  <div class="container">
+    <div class="row co-12 d-flex mt-2 mb-2">
+      <h3>Your favorites</h3>
+    </div>
+    {% if products|length == 0 %}
+      <div class="alert alert-info" role="alert">
+        Your favorites list is empty.
+      </div>
+    {% else %}
+      <table class="table align-middle">
+        <thead>
+          <tr>
+            <th scope="col">Image</th>
+            <th scope="col">Product</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in products %}
+          <tr>
+            <td class="col-2">
+              <a href="{{url_for('main.product_detail', product_id=product.id)}}">
+                <img class="img-thumbnail" src="{{url_for('static', filename=('img/' + product.images[0].filename))}}">
+              </a>
+            </td>
+            <td class="align-middle">{{ product.name }}</td>
+            <td class="align-middle">
+              <div class="input-group">
+                <form method="POST" action="{{url_for('main.add_to_cart')}}" class="pr-3">
+                    <input type="hidden" id="cart_product_id" name="product_id" value="{{product.id}}">
+                    <input type="submit" value="Add to cart" class="btn btn-primary">
+                </form>
+                <form method="POST" action="{{url_for('main.remove_from_favorites', product_id=product.id)}}">
+                    <input type="submit" value="Delete" class="btn btn-danger">
+                </form>
+              </div>
+            </td>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% endif %}
+  </div>
+</section>
+
+{% endblock %}

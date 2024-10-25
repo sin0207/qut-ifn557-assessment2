@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block main %}
+<!-- display contents of user basket -->
+<section>  
+    <div class="container">
+      <div class="row co-12 d-flex mt-2 mb-2">
+          <h3>Shopping Cart</h3>
+      </div>
+      {% if order.details|length == 0 %}
+        <div class="alert alert-info" role="alert">
+          Your shopping cart is empty.
+        </div>
+      {% else %}
+        <div class="table-responsive-md">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Image</th>
+                <th scope="col">Product</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Subtotal</th>
+                <th scope="col">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- each tour on seperate row -->
+              {% for detail in order.details %}
+              <tr>
+                <td class="col-2">
+                  <a href="{{url_for('main.product_detail', product_id=detail.product.id)}}">
+                    <img class="img-thumbnail" src="{{url_for('static', filename=('img/' + detail.product.images[0].filename))}}">
+                  </a>
+                </td>
+                <td class="align-middle">{{ detail.product.name }}</td>
+                <td class="align-middle" style="min-width: 100px">
+                  <form method="POST" id="update_quantity_form_{{ detail.product.id }}" action="{{url_for('main.update_quantity', product_id=detail.product.id)}}">
+                    <div class="input-group">
+                      <input type="number" name="quantity" value="{{detail.quantity}}" class="form-control" style="max-width: 60px" min="1" max="5">
+                      <div class="input-group-append">
+                        <button type="submit" class="btn btn-success" type="button"><i class="fas fa-check"></i></button>
+                      </div>
+                    </div>
+                  </form>
+                </td>
+                <td class="align-middle">{{"$%.2f"|format(detail.product.price * detail.quantity) }}</td>
+                <td class="align-middle">
+                  <form method="POST" action="{{url_for('main.remove_from_cart', product_id=detail.product.id)}}">
+                      <input type="hidden" id="id" name="id" value="{{detail.product.id}}">
+                      <input type="submit" value="Delete" class="btn btn-danger">
+                  </form>
+                </td>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <!-- total price and page controls -->
+        <section>
+            <div class="row col-12 d-flex">
+                <h5 class="mt-4">Quote = {{"$%.2f"|format(order.total | default(0, true))}}</h5>
+            </div>
+            <div class="row col-12 d-flex mt-2 mb-4">
+                <a href="{{url_for('main.index')}}" class="btn btn-primary mr-4">Continue Shopping</a>
+                <a href="{{url_for('main.review_checkout_detail')}}" class="btn btn-primary mr-4">Checkout</a>
+            </div>
+        </section>
+      {% endif %}
+    </div>
+</section>
+
+{% endblock %}

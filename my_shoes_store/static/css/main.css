@@ -1,0 +1,99 @@
+/* Common CSS for all pages */
+.fa-star{
+  color: #FFD700;
+}
+.logo {
+  height: 40px;
+  width: 40px;
+}
+
+/* Set navbar is able to show dropdown menu when hover */
+.navbar-nav li:hover > div.dropdown-menu {
+    display: block;
+}
+
+/* Workaround to show filled icon when hover on icon */
+.btn-icon {
+  padding: 0.25rem
+}
+.btn-icon:hover .icon-unfilled {
+  display: none;
+}
+.btn-icon:hover .icon-filled {
+  display: block;
+}
+.icon-filled {
+  display: none;
+}
+.bi-star-fill {
+  color: #FFD700;
+}
+
+/* using card-footer to show price and rating, but do not keep the border and different background color */
+.card-footer {
+  background-color: white;
+  border: 0;
+}
+
+/* Footer */
+footer {
+  background-color: #252525;
+}
+footer p {
+  color: white;
+}
+
+/* Copy right */
+.copyright {
+  border-top: 1px solid #333r
+}
+
+/* Footer icon cards */
+.icon-card {
+  background-color: #333; /* Dark background */
+  color: white;
+  padding: 10px 0 10px 0;
+  margin-top: 10px;
+  border: 10px solid #252525;
+  border-radius: 5px;
+}
+.icon-card i {
+  font-size: 30px;
+}
+/* Remove default style from link */
+a:link { text-decoration: none; }
+a { color: inherit; }
+a:hover {
+  text-decoration: none;
+  color: #696969;
+}
+
+/* Set icon color as white to avoid the color change effect under a tag */
+.icon-card i {
+  color: white;
+}
+
+/* to keep the navbar in one line */
+@media screen and (min-width: 991px) and (max-width: 1014px) {
+  .brand-name {
+    font-size: 0.80rem;
+  }
+}
+
+.breadcrumb {
+  background-color: white;
+}
+
+
+/* Styles for home page */
+.carousel-item img {
+  max-height: 726px;
+}
+
+.home-card-image {
+  max-height: 400px;
+}
+
+.img-thumbnail {
+  width: 100%;
+}
